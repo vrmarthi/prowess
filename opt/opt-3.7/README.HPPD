@@ -1,0 +1,16 @@
+Package name:     opt
+Version number:   3.7
+Original author:  James Theiler <jt@lanl.gov>
+Original URL:     ftp://sunsite.doc.ic.ac.uk/gnu/
+HP-UX URL:        http://hpux.connect.org.uk/hppd/cgi-bin/search?package=&term=opt-
+Install tree:     /opt/opt
+Report bugs to:   steff@connect.org.uk
+Tested on:        HP 9000/780/C160 running HP-UX 11.00
+C compiler used:  Version A.11.01.02
+Purpose:
+An Options Parsing Tool for programmers. OPT is a subroutine library for
+communicating options and parameter values to a C program via the command line,
+parameter files, environment variables, or a rudimentary builtin interactive
+menu.
+Date archived:    Wed 27 Oct 1999
+Special notes:    See HPUX.Install as usual.

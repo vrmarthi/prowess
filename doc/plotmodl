@@ -1,0 +1,21 @@
+﻿
+
+Usage : plotmodl -i InputFITSmap (or) *.model 
+-------		 -m 0/1 for ampl-phase / real-imag, default 0.
+		 -d default x/X for Xwindow, p/P for postscript.
+
+	"plotmodl --help" for self-explanatory documentation.
+
+plotmodl: Plots the model visibilities in the *.model file or the
+	  FITS map. For the FITS map, the program computes the 
+	  model visibility for each baseline as a superposed sum of
+	  the contribution from each pixel. It then plots the 
+	  computed model visibilities, by default in amplitude and
+	  phase. The X Window is toggle enabled to display real-
+	  imaginary or amplitude-phase. It can be overridden to 
+	  display real-imaginary in the first place by passing -m 1.
+	  The model visibilities can also be written to a postscript
+	  file. Here again, the argument passed with the -m switch 
+	  decides whether the the aplitude-phase or real-imaginary
+	  is written to the postscript file.
+	  

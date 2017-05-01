@@ -1,0 +1,25 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:562: checking for a BSD compatible install
+configure:631: checking whether build environment is sane
+configure:678: checking for working aclocal
+configure:691: checking for working autoconf
+configure:704: checking for working automake
+configure:717: checking for working autoheader
+configure:730: checking for working makeinfo
+configure:743: checking whether make sets ${MAKE}
+configure:773: checking for gcc
+configure:850: checking whether the C compiler (cc -g -Wall -D_PLOT -DGAIN=1.0 -DTSYS=10.0 ) works
+configure:864: cc -o conftest -g -Wall -D_PLOT -DGAIN=1.0 -DTSYS=10.0   conftest.c  1>&5
+configure:861: warning: return type defaults to 'int'
+configure:884: checking whether the C compiler (cc -g -Wall -D_PLOT -DGAIN=1.0 -DTSYS=10.0 ) is a cross-compiler
+configure:889: checking whether we are using GNU C
+configure:951: checking for a BSD compatible install
+configure:1001: checking whether make sets ${MAKE}
+configure:1030: checking for ranlib
+configure:1062: checking for strdup
+configure:1150: checking for longjmp
+configure:1203: checking how to run the C preprocessor
+configure:1265: checking for signal.h
+configure:1300: checking return type of signal handlers

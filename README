@@ -1,0 +1,60 @@
+
+	     \/---------------------------------------------\/
+	     ||	Calibration System for the Programmable ORT ||
+	     /\---------------------------------------------/\
+
+This is a suite of programs to generate, display and analyse complex 
+visibilities obtained from the Phase-I 40-element interferometer and 
+Phase-II 264-element interferometer for the Ooty Radio Telescope(ORT).
+Besides, there are routines to solve for the complex antenna gains 
+and the unknown true visibilties.       
+
+To build:
+---------
+
+1. After untar-ing the package, you must see a directory "CaSPORT". 
+   Change to directory "CaSPORT". 
+
+2. The build directory contains the directories "opt", "cfitsio", "src", 
+   "inc", "lib", "doc" and "bin". Besides, it has a "README"(this file), 
+   the ASCII files "Project.Par"  and "Antenna.Def", the shell script 
+   "RC.sh", and the "Makefile". 
+
+3. The contents of the directory should, for example, look like this:
+
+	drwxr-xr-x 5 user user 4.0K Mar 27 15:15 opt
+	drwxr-xr-x 2 user user  12K Mar 27 15:15 cfitsio
+	drwxr-xr-x 2 user user 4.0K Mar 27 15:15 src
+	drwxr-xr-x 2 user user 4.0K Mar 27 15:16 inc
+	drwxr-xr-x 3 user user 4.0K Mar 27 15:16 lib
+	drwxr-xr-x 2 user user 4.0K Mar 27 15:16 doc
+	drwxr-xr-x 2 user user 4.0K Mar 27 15:16 bin
+	-rw-r--r-- 1 user user 2.5K Mar 27 15:16 README
+	-rw-r--r-- 1 user user 1.4K Mar 27 15:16 Project.Par
+	-rw-r--r-- 1 user user 1.6K Mar 27 15:16 Antenna.Def.40
+	-rw-r--r-- 1 user user 1.6K Mar 27 15:16 Antenna.Def.264
+	-rwxr-xr-x 1 user user 1.2K Mar 27 15:16 RC.sh
+	-rwxr-xr-x 1 user user 1.2K Mar 27 15:16 Makefile
+
+4. Now, at the prompt, run "source RC.sh". If the cfitsio libraries are
+   not present in "lib/", it compiles the cfitsio programs and puts the 
+   static and shared object libraries in "lib/", and copies the cfitsio 
+   header files to "inc/". However, once the cfitsio libraries are available
+   in "lib/", it avoids recompilation of cfitsio. It similarly checks for the
+   opt library "lib/libopt.a" and, if not found, copies it from "opt/lib" 
+   to "lib/". It also sets the environment variables required by the programs. 
+
+5. You are ready to run "make" at the prompt. Once "make" runs successfully, 
+   the executable program should be available in the "bin" directory. Run 
+   "make clean" optionally to remove intermediate *.o files. 
+   Run "make CFLAGS=-D_NO_VERBOSE" to force the non-verbose mode.
+
+6. It is recommended that the binaries from "bin/" are copied to, or a 
+   symbolic link to the executables is provided in, your "/home/user/bin" 
+   area.
+
+7. Note: If you have not installed atlas/LAPACK in your default area, you
+   should change the following line in Makefile as instructed:
+
+   From : GSLLIB  = -lgsl -lptcblas -latlas
+     To : GSLLIB  = -lgsl -lgslcblas

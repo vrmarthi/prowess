@@ -1,0 +1,63 @@
+﻿
+
+Usage :	genFITS -o OutputFITSFile 
+-------		-t ObservingDuration_Seconds [ 0 by default ] 
+		-n no. of sources	     [ 0 by default for logN-logS sky ]
+		-p point sources only	     [ ON by default ]
+		-g Galactic foreground only  [ ON by default ]
+
+	"genFITS --help" for self-explanatory documentation.
+
+genFITS: Generates UV FITS data for a given radio sky observed with the 
+	 Ooty Radio Telescope. The program generates visibilities for 
+	 the Phase-I configuration of 40 antennas or the Phase-II config-
+	 uration of 264 antennas. One has to copy either of the antenna 
+	 configuration definition files "Antenna.Def.40" or "Antenna.Def.264" 
+	 to "Antenna.Def", which is the default antenna configuration
+	 definition file that genFITS expects. Antennas can be switched off 
+	 by commenting the corresponding lines in "Antenna.Def" with a "#".
+
+	 The visibilities are generated from a model of the sky corresponding
+	 to the compact set of unique baselines, for the antennas enabled in
+	 the "Antenna.Def" file. The sky itself has contributions from the 
+	 following components:
+	 (1) extragalactic point sources following the radio source counts
+	     extracted from the WENSS catalog.
+	 (2) a diffuse galactic synchrotron foreground generated from a	
+	     power spectrum of the brightness temperature fluctuations about 
+	     a mean.
+
+	 Either of the contributions can be switched off completely by setting 
+	 only the other component to "ON", i.e. by providing the "-g" switch 
+	 or the "-p" switch respectively for switching on only the Galactic 
+	 foreground or the extragalactic point sources. However, if both are
+	 provided, both the components are turned on, which is the default 
+	 option similar to neither being set to "ON" explicitly. Omitting the
+	 observing duration(the "-t" option) generates a FITS file with the 
+	 name passed through the "-o" option with 0 records, but with a valid
+	 header and extension tables. In a nutshell, the command
+
+	 genFITS -o TEST.FITS
+
+	 produces a FITS file with all the antennas written to the Antenna 
+	 Table, but with no random group records. It also writes a map each
+	 of the sky of point sources, the Galactic synchrotron foreground, the
+	 primary beam and the total sky contribution looked through the
+	 primary beam, in FITS format. It also writes a model visibility file
+	 called "vis.model" coresponding to the total sky signal through the 
+	 primary beam. Besides, it writes other auxiliary files such as
+	 "ant-init.info", "baselines.info" which are useful in their own way.
+
+	 The "Project.Par" file and "Antenna.Def" files have to be placed in 
+	 the directory where the program is to be run. The "Project.Par" file
+	 defines the other parameters required for creating the visibilities.
+	 The most important of them are :-
+	 (a) Channels per sideband
+	 (b) Scan number = 1
+	 (c) Source Name
+	 (d) Source Flux - required for producing calibrator scans and the
+	     corresponding model visibilities.
+	 (e) Pointing RA
+	 (f) Pointing Dec
+	 (g) The "#END" marker is important as it is used in parsing the file.
+

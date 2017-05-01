@@ -1,0 +1,44 @@
+#! /bin/sh
+##
+##############################################################################
+## From the www.redhat.com/rpm webpage:
+##
+##      BUILD is the directory where all building occurs by RPM. 
+##            You don't have to do your test building anywhere in
+##            particular, but this is where RPM will do it's building. 
+##      SOURCES is the directory where you should put your original source 
+##            tar files and your patches. This is where
+##            RPM will look by default. 
+##      SPECS is the directory where all spec files should go. 
+##      RPMS  is where RPM will put all binary RPMs when built. 
+##      SRPMS is where all source RPMs will be put.
+##
+##############################################################################
+##
+## You need to be root to run this script.
+## I tried (for several hours) to build a script that would build locally,
+## and which would not require root priveleges, but I did not succeed.
+## The .rpm file that this generates is probalby not even relocatable!
+##
+##############################################################################
+
+test $UID -eq 0 || (echo "You need to be 'root' to run this script"; exit)
+	
+RPMDIR=`rpm --showrc | grep topdir | sed 's/.*: *//'`
+ARCH=`rpm --showrc | egrep '^build arch' | sed 's/.*: *//'`
+echo RPMDIR=$RPMDIR, ARCH=$ARCH
+
+test -d $RPMDIR && test -d $RPMDIR/SOURCES
+cp @PACKAGE@-@VERSION@.tar.gz $RPMDIR/SOURCES
+cp @PACKAGE@-RPM.spec $RPMDIR/SPECS
+echo Starting rpm:
+rpm -ba -v @PACKAGE@-RPM.spec
+
+echo Copying binary/source rpm files back to current directory:
+cp $RPMDIR/RPMS/$ARCH/@PACKAGE@-@VERSION@-*.rpm .
+cp $RPMDIR/SRPMS/@PACKAGE@-@VERSION@-*.rpm .
+
+/bin/rm -rf $RPMDIR/BUILD/@PACKAGE@-@VERSION@
+echo ok
+
+##############################################################################

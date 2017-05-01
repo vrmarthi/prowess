@@ -1,0 +1,35 @@
+Summary: Options and Parameter parsing Tool
+Name: @PACKAGE@
+Version: @VERSION@
+Release: 1
+Source: nis-www.lanl.gov/~jt/Software/@PACKAGE@/@PACKAGE@-@VERSION@.tar.gz
+Vendor: Homegrown and Halfbaked
+Packager: Nambe Institute Software
+Copyright: LGPL
+Group: Development/Libraries
+
+%description
+@PACKAGE@, v@VERSION@, is a subroutine library for communicating options and
+parameter values to a C program via the command line, parameter files, 
+environment variables, or a rudimentary builtin interactive menu.  It is
+similar in aims to the standard getopt() utility, but it has a different
+(I would say better) interface to the programmer, and a few more bells
+and whistles for the end-users of programs that employ @PACKAGE@.
+
+## BuildRoot: /tmp/@PACKAGE@-@VERSION@
+Prefix: @prefix@
+
+%prep
+%setup
+%build
+./configure --prefix=@prefix@ --disable-test --with-readline
+make
+
+%install
+make install
+
+%files
+## %doc opt.texi 
+@prefix@/lib/libopt.a
+@prefix@/include/opt.h
+@prefix@/info/opt.info

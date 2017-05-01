@@ -1,0 +1,576 @@
+/* OPT v3.7: options parsing tool */
+/*
+ * Copyright (C) 1998, James Theiler (jt@lanl.gov)
+ * 
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Library General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA  02111-1307, USA.
+ * 
+ */
+/* opt_regt.c */
+/* Note: this file generated automatically from makeopth.pl */
+/* Edits to this file may be lost! */
+#include <opt.h>
+inline int
+optrega_UINT(unsigned int *v, char c, char *n, char *B) {
+      return optrega(v,OPT_UINT,c,n,B);
+}
+inline int
+optreg_UINT(unsigned int *v, char c, char *B) {
+      return optreg(v,OPT_UINT,c,B);
+}
+inline int
+optregc_UINT(unsigned int *v, char c) {
+      return optregc(v,OPT_UINT,c);
+}
+inline int
+optregs_UINT(unsigned int *v, char *n) {
+      return optregs(v,OPT_UINT,n);
+}
+inline int
+optregcb_UINT(unsigned int *v, char c, char *B) {
+      return optregcb(v,OPT_UINT,c,B);
+}
+inline int
+optregsb_UINT(unsigned int *v, char *s, char *B) {
+      return optregsb(v,OPT_UINT,s,B);
+}
+inline int
+optrega_UNSINT(unsigned int *v, char c, char *n, char *B) {
+      return optrega(v,OPT_UNSINT,c,n,B);
+}
+inline int
+optreg_UNSINT(unsigned int *v, char c, char *B) {
+      return optreg(v,OPT_UNSINT,c,B);
+}
+inline int
+optregc_UNSINT(unsigned int *v, char c) {
+      return optregc(v,OPT_UNSINT,c);
+}
+inline int
+optregs_UNSINT(unsigned int *v, char *n) {
+      return optregs(v,OPT_UNSINT,n);
+}
+inline int
+optregcb_UNSINT(unsigned int *v, char c, char *B) {
+      return optregcb(v,OPT_UNSINT,c,B);
+}
+inline int
+optregsb_UNSINT(unsigned int *v, char *s, char *B) {
+      return optregsb(v,OPT_UNSINT,s,B);
+}
+inline int
+optrega_INTLEVEL(int *v, char c, char *n, char *B) {
+      return optrega(v,OPT_INTLEVEL,c,n,B);
+}
+inline int
+optreg_INTLEVEL(int *v, char c, char *B) {
+      return optreg(v,OPT_INTLEVEL,c,B);
+}
+inline int
+optregc_INTLEVEL(int *v, char c) {
+      return optregc(v,OPT_INTLEVEL,c);
+}
+inline int
+optregs_INTLEVEL(int *v, char *n) {
+      return optregs(v,OPT_INTLEVEL,n);
+}
+inline int
+optregcb_INTLEVEL(int *v, char c, char *B) {
+      return optregcb(v,OPT_INTLEVEL,c,B);
+}
+inline int
+optregsb_INTLEVEL(int *v, char *s, char *B) {
+      return optregsb(v,OPT_INTLEVEL,s,B);
+}
+inline int
+optrega_UNDELIMV(char **v, char c, char *n, char *B) {
+      return optrega(v,OPT_UNDELIMV,c,n,B);
+}
+inline int
+optreg_UNDELIMV(char **v, char c, char *B) {
+      return optreg(v,OPT_UNDELIMV,c,B);
+}
+inline int
+optregc_UNDELIMV(char **v, char c) {
+      return optregc(v,OPT_UNDELIMV,c);
+}
+inline int
+optregs_UNDELIMV(char **v, char *n) {
+      return optregs(v,OPT_UNDELIMV,n);
+}
+inline int
+optregcb_UNDELIMV(char **v, char c, char *B) {
+      return optregcb(v,OPT_UNDELIMV,c,B);
+}
+inline int
+optregsb_UNDELIMV(char **v, char *s, char *B) {
+      return optregsb(v,OPT_UNDELIMV,s,B);
+}
+inline int
+optrega_ULONG(unsigned long *v, char c, char *n, char *B) {
+      return optrega(v,OPT_ULONG,c,n,B);
+}
+inline int
+optreg_ULONG(unsigned long *v, char c, char *B) {
+      return optreg(v,OPT_ULONG,c,B);
+}
+inline int
+optregc_ULONG(unsigned long *v, char c) {
+      return optregc(v,OPT_ULONG,c);
+}
+inline int
+optregs_ULONG(unsigned long *v, char *n) {
+      return optregs(v,OPT_ULONG,n);
+}
+inline int
+optregcb_ULONG(unsigned long *v, char c, char *B) {
+      return optregcb(v,OPT_ULONG,c,B);
+}
+inline int
+optregsb_ULONG(unsigned long *v, char *s, char *B) {
+      return optregsb(v,OPT_ULONG,s,B);
+}
+inline int
+optrega_USHORT(unsigned short *v, char c, char *n, char *B) {
+      return optrega(v,OPT_USHORT,c,n,B);
+}
+inline int
+optreg_USHORT(unsigned short *v, char c, char *B) {
+      return optreg(v,OPT_USHORT,c,B);
+}
+inline int
+optregc_USHORT(unsigned short *v, char c) {
+      return optregc(v,OPT_USHORT,c);
+}
+inline int
+optregs_USHORT(unsigned short *v, char *n) {
+      return optregs(v,OPT_USHORT,n);
+}
+inline int
+optregcb_USHORT(unsigned short *v, char c, char *B) {
+      return optregcb(v,OPT_USHORT,c,B);
+}
+inline int
+optregsb_USHORT(unsigned short *v, char *s, char *B) {
+      return optregsb(v,OPT_USHORT,s,B);
+}
+inline int
+optrega_ABSNEGFLAG(int *v, char c, char *n, char *B) {
+      return optrega(v,OPT_ABSNEGFLAG,c,n,B);
+}
+inline int
+optreg_ABSNEGFLAG(int *v, char c, char *B) {
+      return optreg(v,OPT_ABSNEGFLAG,c,B);
+}
+inline int
+optregc_ABSNEGFLAG(int *v, char c) {
+      return optregc(v,OPT_ABSNEGFLAG,c);
+}
+inline int
+optregs_ABSNEGFLAG(int *v, char *n) {
+      return optregs(v,OPT_ABSNEGFLAG,n);
+}
+inline int
+optregcb_ABSNEGFLAG(int *v, char c, char *B) {
+      return optregcb(v,OPT_ABSNEGFLAG,c,B);
+}
+inline int
+optregsb_ABSNEGFLAG(int *v, char *s, char *B) {
+      return optregsb(v,OPT_ABSNEGFLAG,s,B);
+}
+inline int
+optrega_INT(int *v, char c, char *n, char *B) {
+      return optrega(v,OPT_INT,c,n,B);
+}
+inline int
+optreg_INT(int *v, char c, char *B) {
+      return optreg(v,OPT_INT,c,B);
+}
+inline int
+optregc_INT(int *v, char c) {
+      return optregc(v,OPT_INT,c);
+}
+inline int
+optregs_INT(int *v, char *n) {
+      return optregs(v,OPT_INT,n);
+}
+inline int
+optregcb_INT(int *v, char c, char *B) {
+      return optregcb(v,OPT_INT,c,B);
+}
+inline int
+optregsb_INT(int *v, char *s, char *B) {
+      return optregsb(v,OPT_INT,s,B);
+}
+inline int
+optrega_VSTRING(char **v, char c, char *n, char *B) {
+      return optrega(v,OPT_VSTRING,c,n,B);
+}
+inline int
+optreg_VSTRING(char **v, char c, char *B) {
+      return optreg(v,OPT_VSTRING,c,B);
+}
+inline int
+optregc_VSTRING(char **v, char c) {
+      return optregc(v,OPT_VSTRING,c);
+}
+inline int
+optregs_VSTRING(char **v, char *n) {
+      return optregs(v,OPT_VSTRING,n);
+}
+inline int
+optregcb_VSTRING(char **v, char c, char *B) {
+      return optregcb(v,OPT_VSTRING,c,B);
+}
+inline int
+optregsb_VSTRING(char **v, char *s, char *B) {
+      return optregsb(v,OPT_VSTRING,s,B);
+}
+inline int
+optrega_UNDELIM(char **v, char c, char *n, char *B) {
+      return optrega(v,OPT_UNDELIM,c,n,B);
+}
+inline int
+optreg_UNDELIM(char **v, char c, char *B) {
+      return optreg(v,OPT_UNDELIM,c,B);
+}
+inline int
+optregc_UNDELIM(char **v, char c) {
+      return optregc(v,OPT_UNDELIM,c);
+}
+inline int
+optregs_UNDELIM(char **v, char *n) {
+      return optregs(v,OPT_UNDELIM,n);
+}
+inline int
+optregcb_UNDELIM(char **v, char c, char *B) {
+      return optregcb(v,OPT_UNDELIM,c,B);
+}
+inline int
+optregsb_UNDELIM(char **v, char *s, char *B) {
+      return optregsb(v,OPT_UNDELIM,s,B);
+}
+inline int
+optrega_NUL(void *v, char c, char *n, char *B) {
+      return optrega(v,OPT_NUL,c,n,B);
+}
+inline int
+optreg_NUL(void *v, char c, char *B) {
+      return optreg(v,OPT_NUL,c,B);
+}
+inline int
+optregc_NUL(void *v, char c) {
+      return optregc(v,OPT_NUL,c);
+}
+inline int
+optregs_NUL(void *v, char *n) {
+      return optregs(v,OPT_NUL,n);
+}
+inline int
+optregcb_NUL(void *v, char c, char *B) {
+      return optregcb(v,OPT_NUL,c,B);
+}
+inline int
+optregsb_NUL(void *v, char *s, char *B) {
+      return optregsb(v,OPT_NUL,s,B);
+}
+inline int
+optrega_SHORT(short *v, char c, char *n, char *B) {
+      return optrega(v,OPT_SHORT,c,n,B);
+}
+inline int
+optreg_SHORT(short *v, char c, char *B) {
+      return optreg(v,OPT_SHORT,c,B);
+}
+inline int
+optregc_SHORT(short *v, char c) {
+      return optregc(v,OPT_SHORT,c);
+}
+inline int
+optregs_SHORT(short *v, char *n) {
+      return optregs(v,OPT_SHORT,n);
+}
+inline int
+optregcb_SHORT(short *v, char c, char *B) {
+      return optregcb(v,OPT_SHORT,c,B);
+}
+inline int
+optregsb_SHORT(short *v, char *s, char *B) {
+      return optregsb(v,OPT_SHORT,s,B);
+}
+inline int
+optrega_LONG(long *v, char c, char *n, char *B) {
+      return optrega(v,OPT_LONG,c,n,B);
+}
+inline int
+optreg_LONG(long *v, char c, char *B) {
+      return optreg(v,OPT_LONG,c,B);
+}
+inline int
+optregc_LONG(long *v, char c) {
+      return optregc(v,OPT_LONG,c);
+}
+inline int
+optregs_LONG(long *v, char *n) {
+      return optregs(v,OPT_LONG,n);
+}
+inline int
+optregcb_LONG(long *v, char c, char *B) {
+      return optregcb(v,OPT_LONG,c,B);
+}
+inline int
+optregsb_LONG(long *v, char *s, char *B) {
+      return optregsb(v,OPT_LONG,s,B);
+}
+inline int
+optrega_ABSFLAG(int *v, char c, char *n, char *B) {
+      return optrega(v,OPT_ABSFLAG,c,n,B);
+}
+inline int
+optreg_ABSFLAG(int *v, char c, char *B) {
+      return optreg(v,OPT_ABSFLAG,c,B);
+}
+inline int
+optregc_ABSFLAG(int *v, char c) {
+      return optregc(v,OPT_ABSFLAG,c);
+}
+inline int
+optregs_ABSFLAG(int *v, char *n) {
+      return optregs(v,OPT_ABSFLAG,n);
+}
+inline int
+optregcb_ABSFLAG(int *v, char c, char *B) {
+      return optregcb(v,OPT_ABSFLAG,c,B);
+}
+inline int
+optregsb_ABSFLAG(int *v, char *s, char *B) {
+      return optregsb(v,OPT_ABSFLAG,s,B);
+}
+inline int
+optrega_UNDELIMC(char *v, char c, char *n, char *B) {
+      return optrega(v,OPT_UNDELIMC,c,n,B);
+}
+inline int
+optreg_UNDELIMC(char *v, char c, char *B) {
+      return optreg(v,OPT_UNDELIMC,c,B);
+}
+inline int
+optregc_UNDELIMC(char *v, char c) {
+      return optregc(v,OPT_UNDELIMC,c);
+}
+inline int
+optregs_UNDELIMC(char *v, char *n) {
+      return optregs(v,OPT_UNDELIMC,n);
+}
+inline int
+optregcb_UNDELIMC(char *v, char c, char *B) {
+      return optregcb(v,OPT_UNDELIMC,c,B);
+}
+inline int
+optregsb_UNDELIMC(char *v, char *s, char *B) {
+      return optregsb(v,OPT_UNDELIMC,s,B);
+}
+inline int
+optrega_UCHAR(unsigned char *v, char c, char *n, char *B) {
+      return optrega(v,OPT_UCHAR,c,n,B);
+}
+inline int
+optreg_UCHAR(unsigned char *v, char c, char *B) {
+      return optreg(v,OPT_UCHAR,c,B);
+}
+inline int
+optregc_UCHAR(unsigned char *v, char c) {
+      return optregc(v,OPT_UCHAR,c);
+}
+inline int
+optregs_UCHAR(unsigned char *v, char *n) {
+      return optregs(v,OPT_UCHAR,n);
+}
+inline int
+optregcb_UCHAR(unsigned char *v, char c, char *B) {
+      return optregcb(v,OPT_UCHAR,c,B);
+}
+inline int
+optregsb_UCHAR(unsigned char *v, char *s, char *B) {
+      return optregsb(v,OPT_UCHAR,s,B);
+}
+inline int
+optrega_NEGFLAG(int *v, char c, char *n, char *B) {
+      return optrega(v,OPT_NEGFLAG,c,n,B);
+}
+inline int
+optreg_NEGFLAG(int *v, char c, char *B) {
+      return optreg(v,OPT_NEGFLAG,c,B);
+}
+inline int
+optregc_NEGFLAG(int *v, char c) {
+      return optregc(v,OPT_NEGFLAG,c);
+}
+inline int
+optregs_NEGFLAG(int *v, char *n) {
+      return optregs(v,OPT_NEGFLAG,n);
+}
+inline int
+optregcb_NEGFLAG(int *v, char c, char *B) {
+      return optregcb(v,OPT_NEGFLAG,c,B);
+}
+inline int
+optregsb_NEGFLAG(int *v, char *s, char *B) {
+      return optregsb(v,OPT_NEGFLAG,s,B);
+}
+inline int
+optrega_FLOAT(float *v, char c, char *n, char *B) {
+      return optrega(v,OPT_FLOAT,c,n,B);
+}
+inline int
+optreg_FLOAT(float *v, char c, char *B) {
+      return optreg(v,OPT_FLOAT,c,B);
+}
+inline int
+optregc_FLOAT(float *v, char c) {
+      return optregc(v,OPT_FLOAT,c);
+}
+inline int
+optregs_FLOAT(float *v, char *n) {
+      return optregs(v,OPT_FLOAT,n);
+}
+inline int
+optregcb_FLOAT(float *v, char c, char *B) {
+      return optregcb(v,OPT_FLOAT,c,B);
+}
+inline int
+optregsb_FLOAT(float *v, char *s, char *B) {
+      return optregsb(v,OPT_FLOAT,s,B);
+}
+inline int
+optrega_STRING(char **v, char c, char *n, char *B) {
+      return optrega(v,OPT_STRING,c,n,B);
+}
+inline int
+optreg_STRING(char **v, char c, char *B) {
+      return optreg(v,OPT_STRING,c,B);
+}
+inline int
+optregc_STRING(char **v, char c) {
+      return optregc(v,OPT_STRING,c);
+}
+inline int
+optregs_STRING(char **v, char *n) {
+      return optregs(v,OPT_STRING,n);
+}
+inline int
+optregcb_STRING(char **v, char c, char *B) {
+      return optregcb(v,OPT_STRING,c,B);
+}
+inline int
+optregsb_STRING(char **v, char *s, char *B) {
+      return optregsb(v,OPT_STRING,s,B);
+}
+inline int
+optrega_CSTRING(char *v, char c, char *n, char *B) {
+      return optrega(v,OPT_CSTRING,c,n,B);
+}
+inline int
+optreg_CSTRING(char *v, char c, char *B) {
+      return optreg(v,OPT_CSTRING,c,B);
+}
+inline int
+optregc_CSTRING(char *v, char c) {
+      return optregc(v,OPT_CSTRING,c);
+}
+inline int
+optregs_CSTRING(char *v, char *n) {
+      return optregs(v,OPT_CSTRING,n);
+}
+inline int
+optregcb_CSTRING(char *v, char c, char *B) {
+      return optregcb(v,OPT_CSTRING,c,B);
+}
+inline int
+optregsb_CSTRING(char *v, char *s, char *B) {
+      return optregsb(v,OPT_CSTRING,s,B);
+}
+inline int
+optrega_FLAG(int *v, char c, char *n, char *B) {
+      return optrega(v,OPT_FLAG,c,n,B);
+}
+inline int
+optreg_FLAG(int *v, char c, char *B) {
+      return optreg(v,OPT_FLAG,c,B);
+}
+inline int
+optregc_FLAG(int *v, char c) {
+      return optregc(v,OPT_FLAG,c);
+}
+inline int
+optregs_FLAG(int *v, char *n) {
+      return optregs(v,OPT_FLAG,n);
+}
+inline int
+optregcb_FLAG(int *v, char c, char *B) {
+      return optregcb(v,OPT_FLAG,c,B);
+}
+inline int
+optregsb_FLAG(int *v, char *s, char *B) {
+      return optregsb(v,OPT_FLAG,s,B);
+}
+inline int
+optrega_DOUBLE(double *v, char c, char *n, char *B) {
+      return optrega(v,OPT_DOUBLE,c,n,B);
+}
+inline int
+optreg_DOUBLE(double *v, char c, char *B) {
+      return optreg(v,OPT_DOUBLE,c,B);
+}
+inline int
+optregc_DOUBLE(double *v, char c) {
+      return optregc(v,OPT_DOUBLE,c);
+}
+inline int
+optregs_DOUBLE(double *v, char *n) {
+      return optregs(v,OPT_DOUBLE,n);
+}
+inline int
+optregcb_DOUBLE(double *v, char c, char *B) {
+      return optregcb(v,OPT_DOUBLE,c,B);
+}
+inline int
+optregsb_DOUBLE(double *v, char *s, char *B) {
+      return optregsb(v,OPT_DOUBLE,s,B);
+}
+inline int
+optrega_CHAR(char *v, char c, char *n, char *B) {
+      return optrega(v,OPT_CHAR,c,n,B);
+}
+inline int
+optreg_CHAR(char *v, char c, char *B) {
+      return optreg(v,OPT_CHAR,c,B);
+}
+inline int
+optregc_CHAR(char *v, char c) {
+      return optregc(v,OPT_CHAR,c);
+}
+inline int
+optregs_CHAR(char *v, char *n) {
+      return optregs(v,OPT_CHAR,n);
+}
+inline int
+optregcb_CHAR(char *v, char c, char *B) {
+      return optregcb(v,OPT_CHAR,c,B);
+}
+inline int
+optregsb_CHAR(char *v, char *s, char *B) {
+      return optregsb(v,OPT_CHAR,s,B);
+}

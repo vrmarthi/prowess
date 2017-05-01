@@ -1,0 +1,36 @@
+
+	     \/---------------------------------------------\/
+	     ||	Calibration System for the Programmable ORT ||
+	     /\---------------------------------------------/\
+
+This is a suite of programs to generate, display and analyse complex 
+visibilities obtained from the Phase-I 40-element interferometer and 
+Phase-II 264-element interferometer for the Ooty Radio Telescope(ORT).
+Besides, there are routines to solve for the complex antenna gains 
+and the unknown true visibilties. 
+
+Command line calls
+------------------
+
+The following command line calls result in definite action:
+
+list   progs   readme  explain  version
+clear  quit    exit
+
+list   	  : List all the keywords supported at the command prompt.
+~~~~
+prog	  : List all the executables available in the CaSPORT package.
+~~~~~
+readme	  : Open "README", the build instruction file for viewing.
+~~~~~~
+explain	  : Open this file, the help document for the CaSPORT package.
+~~~~~~~
+version	  : Show what version of CaSPORT is currently running.
+~~~~~~~
+clear	  : Clear the page and take the CaSPORT prompt to the page top.
+~~~~~
+quit/exit : Exit the CaSPORT package.
+~~~~~~~~~
+
+Press "q" to exit this page.
+

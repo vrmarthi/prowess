@@ -1,0 +1,25 @@
+
+
+Usage : psFITS -o OutputFITSFile 
+-------	       -t ObservingDuration_Seconds 
+
+	"psFITS --help" for self-explanatory documentation.
+
+psFITS:  Generates UV FITS data for a single point source(a calibrator, 
+	 for example) observed with the Ooty Radio Telescope. The program 
+	 generates visibilities for the Phase-I configuration of 40 antennas
+	 or the Phase-II configuration of 264 antennas. One has to copy 
+	 either of the antenna configuration definition files "Antenna.Def.40" 
+	 or "Antenna.Def.264" to "Antenna.Def", which is the default antenna 
+	 configuration definition file that psFITS expects. Antennas can be 
+	 switched off by commenting the corresponding lines in "Antenna.Def"
+	 with a "#".
+
+	 Although it generates the auxiliary files "ant-init.info" and 
+	 "baselines.info", it does not write a FITS map of the sky being 
+	 observed. Omitting the argument for the "-t" option, similar to
+	 "genFITS" produces a UVFITS files with the proper extension tables
+	 but without any random group record. The "Antenna.Def" and 
+	 "Project.Par" files have to be available in the working directory.
+	 Refer to the documentation on "genFITS" for details of the "Project.Par"
+	 file.

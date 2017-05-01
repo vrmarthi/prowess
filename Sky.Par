@@ -1,0 +1,26 @@
+**********************************************************
+** Project parameter inputs - edit only the par values! **
+** According to the number of scans in SCANPAR, add or  **
+** remove SCAN info. Do not modify the format or layout **
+** of the file!      	       		    	        **
+**                  -Visweshwar Ram Marthi, 09-JAN-2012 **
+**********************************************************
+
+#PROJPAR
+Project Code			: DASTEST01
+Observer			: Marthi
+Obs. Mode (TRANSIT/TRACKING)	: TRACKING
+Channels per sideband		: 32
+
+#SCANPAR
+No. of scans			: 1
+
+#SCAN
+Scan number			: 1
+Source Name			: 1330+251
+Source Flux			: 32.0
+Pointing RA			: 13h30m00.000s
+Pointing Dec			: 25d09'0.000"
+Calibrator      ( Y / N )	: Y
+
+#END

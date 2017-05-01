@@ -1,0 +1,150 @@
+#! /bin/sh
+## Perform various tests automatically -- not that easy with interactive code...
+
+##
+PATH=.:$PATH
+## Change output to a real file if you need further diagnostics
+output=/dev/null
+echo > $output
+
+## checkit: if previous command successful, then print a dot
+##          otherwise note an error
+## checkitneg: vice versa
+##
+checkit ()    { if [ $? -eq 0 ]; then echo -n "."; else waserror $*; fi }
+checkitneg () { if [ $? -ne 0 ]; then echo -n "."; else waserror $*; fi }
+errcount=0
+waserror()    { echo Error: $*; errcount=`expr $errcount + 1`; }
+################################
+## Make sure we have the latest versions...
+make birthday testopt hooktest iloop testtypes
+
+################################
+
+birthday | grep Max >> $output
+checkit Max\'s birthday
+birthday -m4 -d24 -y1993 | grep Sky >> $output
+checkit Sky\'s birthday
+
+birthday -m 7 -v | grep Hello >> $output
+checkit setting -m
+
+## Check -y # and -y#
+##
+birthday -y 2001 -v | grep 2001 >> $output
+checkit setting -y 2001
+birthday -y2001 -v | grep 2001 >> $output
+checkit setting -y2001
+
+## Hmmm, maybe --help should write to stdout instead of stderr
+##
+birthday --help 2>&1 | grep Month >> $output
+checkit --help
+
+## Check @file.opt
+/bin/rm -f birthday.opt
+birthday -m 11 %% . >> $output
+birthday @@ -v | grep '/11/' >> $output
+checkit using %% and @@
+## Make a new birthday.opt file
+birthday @@ %% >> $output 2>&1 
+## See whether the backup was made
+test -f birthday.opt~
+checkit optfile backup
+
+################################
+
+## Check opthook
+##
+testopt -y 2000 | grep bug >> $output
+checkit opthook
+
+## Check long options
+##
+testopt --month 12 | grep '/12/' >> $output
+checkit longname --month
+
+## Check optinvoked()
+##
+testopt -m 9 | grep "User set" >> $output
+checkit optinvoked
+
+## Check opthelp
+##
+testopt \?d 2>&1 | grep "32" >> $output
+checkit opthelp
+
+## Check optQuit
+##
+testopt . | grep "Bye" >> $output
+checkit optQuit
+
+OPT=-y2001 testopt | grep 2001 >> $output
+checkit optEnvVarName
+
+testopt -m 9 -- snarfle | grep 'Extra option: snarfle' >> $output
+checkit reading strings after the unadorned --
+testopt -m 7 snarfle | grep 'Hello, snarfle' >> $output
+checkit reading strings after processing is finished
+
+## Check optexec
+testopt --version | grep XXX >> $output
+checkit optexec
+## Make sure it exits before executing actual runcode
+## This no longer happens automatically; the hook fcn must call exit
+## (or optAbortRun())
+testopt -y2001 --version | grep 2001 >> $output
+checkitneg optexec fails to exit
+
+## Check builtin --optVersion
+testopt --optVersion 2>&1 | grep 'OPT Version' >> $output
+checkit optVersion
+## Make sure it exits before executing actual runcode
+testopt -y2001 --optVersion 2>&1 | grep 2001 >> $output
+checkitneg optVersion fails to exit
+
+## Check fix_mon
+testopt -m22 2>&1 | grep '/01/' >> $output
+checkit fix_mon hook
+
+## Mark Muldoon's hook test
+hooktest -a 2 | grep 'All is well' >> $output
+checkit hooktest
+
+## Check optAbortRun (too bad we cant check the infinite loop here -- but
+## I think you really have to do that by hand!)
+## This only works if HAVE_LONGJMP is #define'd to be 1
+echo 'N -1 =
+.' | iloop --menu 2>&1 | grep 'Run aborted' >> $output
+checkit optAbortRun, are you sure HAVE_LONGJMP is nonzero \?
+
+## Check optMain
+testmain -N 1 hello world | grep hello >> $output
+checkit optMain echoing extra parameters
+testmain -N 1 hello world | grep world >> $output
+checkitneg optMain not echoing all extra parameters
+
+## Check CSTRING bug (was in v3.4, fixed in v3.5)
+echo . | testtypes -mhello --menu 2>&1 | grep hello >> $output
+checkit CSTRING bug
+echo . | testtypes -lhello --menu 2>&1 | grep hello >> $output
+checkit VSTRING bug
+
+## New feature, default options file
+echo '-y 98765' > testoptrc
+testopt | grep 98765 >> $output
+checkit optDefaultFile bug
+/bin/rm testoptrc
+
+## Test unsigned short/long
+testtypes -n -1 | grep 65535 >> $output
+checkit USHORT error
+testtypes -o -1 | grep 4294967295 >> $output
+checkit ULONG error
+
+echo "Done"
+if [ $errcount -eq 0 ]; then echo "PASSED"; else echo "$errcount errors"; fi
+exit $errcount
+    
+
+

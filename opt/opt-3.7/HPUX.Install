@@ -1,0 +1,42 @@
+System:
+======
+	HP-UX shin B.10.20 A 9000/780 
+URL:
+====
+	http://nis-www.lanl.gov/~jt/Software/
+
+HP Porting Changes:
+===================
+
+  Configuration Files changed
+  ----------------------------
+
+  configure - added a test for HPUX, if true we use "cc -Ae"
+  src/Makefile.in - added HP shared lib to build/install/clean rules
+
+  Source warnings/errors fixed
+  ----------------------------
+
+  opt_regt.c - removed all directives to create "inline" code.
+
+
+Building:
+=========
+
+  Run "configure" || "xmkmf" to re-generate the Makefiles. 
+
+  Run "make" in the top level dir.
+
+  Use "make -n install" to check the defaults, then "make install"
+
+
+Installed:
+=========
+ By
+ --     [steff@csc.liv.ac.uk]
+ On
+ --	[Tue  6 Oct 1998]
+ 
+ 
+       HPUX Porting and Archive Centre, Connect, Liverpool University.
+  __/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/

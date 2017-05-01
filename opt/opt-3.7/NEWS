@@ -1,0 +1,345 @@
+                          What's up with opt
+                          ==================
+=== 3.7 ===
+
+-- OPT_STRING replaces OPT_VSTRING; does the same thing, you just
+   don't need the leading V.  This also makes explicit my preference
+   for VSTRING's over CSTRING's. Similarly OPT_UNDELIM replaces
+   OPT_UNDELIMV.  The old forms will stick around for awhile, of
+   course, but...
+
+-- OPT_UINT replaces OPT_UNSINT
+-- new unsigned types added: OPT_USHORT, OPT_ULONG, OPT_UCHAR.
+
+-- added yet another hook, optDefaultFile(); if this is set, eg to
+   '~/.programrc' or to '/etc/programrc', then options are first grabbed
+   from this default file before command line processing proceeds.
+   Currently, you can only specify one default, but I can see the virtue
+   in having a default site-wide configuration file as well as a local
+   user's default file, so if this turns out to really be useful, I may
+   extend it in another release.
+
+-- removed the old ext/opt.pl library that Dean and I wrote a while
+   ago, and in its place is a modern new object-oriented perl module
+   ext/Opt.pm that more accurately imitates the C version of opt (so
+   you can use frontends, such as tkopt, on both C and perl code that
+   uses opt for parameter parsing.
+
+-- an 'opt-RPM.spec' file and a 'makeRPM' shell script are now
+   packaged with the distribution.  This is mostly for my own
+   convenience; I will from now on try to release rpm files as well as
+   the usual tar.gz source files (myself, I still like the
+   old-fashioned tarballs, but I will grudgingly agree that sometimes
+   there is more than one way to do it).  Unfortunately, you have to
+   be 'root' to make the rpm file using this script.  I am sure it is
+   possible to make an rpm file without being root, but after several
+   hours late last night with the RPM docs (including a downloaded
+   postscript book 'Maximum RPM'), I was not able to figure out how to
+   do it.
+
+-- 'make check' now runs the test/checkopt script, which is now included
+   in the distribution.
+
+-- a configure option '--enable-flagonezero' was added; when opt is
+   configured this way then '-x1' (or '--xflag=1') is the way that
+   options are written out to files, rather than '-x+' or '--xflag=+'.
+   When the options are read from files, then the flags will 
+   recognize both forms: '-x+' or '-x1'.  Note that this can be
+   ambiguous if '-1' is an option; for that reason the use of this
+   configure option is questionable, and the default is not to use it.
+
+A number of changes, suggested by Jason V. Morgan:
+-- opt_message() now writes to 'stdout' instead of 'stderr';
+   opt_warning() and opt_fatal() still write to 'stderr'.
+-- when you invoke '%file.opt' to write options to a file, the
+   options which have long names, but not short names, are now
+   written as well.
+-- optAdditionalUsage() hook added; this is for writing longer
+   help messages; but I altered it from JVM's suggestion so that
+   after the last option the line ' --' is printed (meaning 'end of
+   options' so that automatic parsing of the help message by a 
+   frontend such as tkopt is still possible.
+-- changed license from GPL to LGPL
+
+[[ Note there was no release 3.6; there has been a version 3.6a on the
+   website for the last couple of months, but releases with 'a' (or
+   'b' or 'c' or ...) are not "official".  What that means in practice
+   is that two "unofficial" distributions with the same name (eg, two
+   files named opt-3.6a.tar.gz) might not be identical.  But if you
+   grab an "official" distribution (eg, opt-3.7.tar.gz) on Tuesday,
+   and your buddy grabs a distribution with the same name on the
+   following Saturday, then the two distributions should be the same.
+]]
+
+=== 3.5 ===
+
+-- Bug pointed out by Geoffrey B. Crew at MIT in the OPT_CSTRING type.
+After you alter the variable, trying to print the menu would cause a
+coredump.  It's now fixed, but I wonder if there is any scenario in
+which the CSTRING might be preferred over the VSTRING?  In general, I
+think it's better to use VSTRING, but maybe somebody can give me a
+good reason to prefer CSTRING in some situation.  By the way, an
+oddity of using CSTRING's is that if you'd defined 'char cvar[100]'
+then 'cvar' is a 'char *', but on some systems [eg, my aout linux]
+'&cvar' is also a 'char *', and in fact it is exactly the _same_
+pointer.  (On other systems [eg, sun4], it simply won't permit
+'&cvar'.)  What this means is that the correct use of CSTRING types
+looks different from all other types, eg
+   char cvar[100];
+   char *var;
+   int ival;
+
+   optreg_CSTRING(&cvar,...) /* some systems won't let you compile; for those
+                                that do compile, it is equivalnt to... */
+   optreg_CSTRING(cvar,...)  /* without the '&' */
+   optreg_VSTRING(&var,...)  /* with '&' */
+   optreg_INT(&ival,...)     /* ...just like all ordinary parameters */
+
+
+-- G's bug reminded me of a gotcha I ran across the other day.  I
+tried this: optreg_VSTRING(var,...)
+instead of: optreg_VSTRING(&var,...)
+reasoning (wrongheadedly) that since var was already a pointer (a
+char *), I shouldn't need the '&'.  My first clue that something was
+wrong was a coredump.  Since the first argument to the optreg...() 
+functions is always a 'void *', it was quite happy with a 'char *' and
+had no way of knowing that it really wanted a 'char **'.
+  So I've reimplemented the optreg_TYPE() functions as real functions 
+instead of macros.  I'm hoping the stronger typechecking will help out.
+In fact, this leads me to prefer using optreg_TYPE() functions instead
+of optreg(...,OPT_TYPE,...) invocations.
+
+=== 3.4 ===
+-- Another minor overhaul in the opt.texi documentation.
+
+-- Removed both occurrences of 'access()' function; No longer need
+the HAVE_UNISTD_H flag or the #include <unistd.h> lines.  Also
+removed the one call to 'system()'.
+  
+-- Fixed a bug in types ABSFLAG and ABSNEGFLAG.
+
+-- Mark Muldoon found a bug in def'n of optBeginMain, the version that
+kicks in when HAVE_LONGJMP is not defined (or is defined to 0).
+
+-- Andrew MacLean provided a list of warnings from his Visual C++
+compiler, and some suggestions for reducing that list.  Mostly this
+involved getting prototypes to be correct, especially that pesky
+strdup(), but two actual bugs were uncovered as well: One was the bug
+noted by Mark, above, and the other was a void function that tried to
+return a value.  Andrew's suggestions have all been incorporated.
+
+-- A change that actually took place in v3.2, but which I forgot to
+document is that when opt(&argc,&argv) returns, it still includes the
+same argv[0] that was passed to it.  Thus the argc/argv is useable
+in another main-like function.
+
+=== 3.2 ===
+-- Updated and expanded documentation (mostly in the Etc section).
+
+-- Added optMain() which is similar to optRun(), but what it registers
+is a function that takes argc/argv as arguments.  I now think optMain()
+should be the "standard" approach, instead of optRun().  If optMain and
+optRun are both invoked, then optMain wins.  When '= a b c' is typed
+at the menu prompt, then the registered main-like function, is called
+with argc=4 and argv = {"=" "a" "b" "c"}.  Note that argv[0], which
+used to hold the name of the program, now holds the name of "=".  The
+idea is that your original main(ac,av) function can be renamed
+oldmain(ac,av), and then you can add a main() that looks like:
+  main(int argc, char **argv)
+  {
+    optreg(&N,OPT_LONG,'N',"Number...");
+    optMain(oldmain);
+    opt(&argc,&argv);
+    oldmain(argc,argv);
+  }
+and your program will act just as before, but now if you put a '-N #'
+as your first command, opt will parse that before passing along argc/argv
+to your old main. 
+ WARNING: you will be tempted at this point to suggest that the old
+main might also use opt for its options processing.  If you think that's
+something that might actually be useful, let me know; it will not be
+trivial to implement, and right now, it is not implemented.  I shudder to
+think what will happen if you try it.
+ WARNING: you can play with the program 'test/testmain' to get a sense
+of how this works.  It's brand new, so suggestions are particularly
+welcome.
+
+-- Fairly major changes to configure.in script; it tries to autodetect
+whether the longjmp() program is available, and if not disables
+(or rather, trivializes) the optBeginRun()/optAbortRun() functions.
+It no longer cares about vprintf, since opt_errmess() and all 
+references to it have been removed.
+
+-- Removed opt_errmess(), which opt no longer uses.  So variable 
+argument printf-style error messages are not permitted.  However,
+the programmer can still use opt_message(), opt_warning(), and
+opt_fatal().
+
+-- Bowing to popular demand, added OPT_SHORT.  Now that I've done it,
+I realize that OPT_USHORT and OPT_ULONG for the unsigned types should
+also be added...maybe next release.
+
+-- Added opt_sf.h to the distribution.  This permits you to make
+a single file 'opt.c' which is more convenient for attaching it
+to code that you may want to distribute.
+
+-- Fixed a (huge!) bug in opthook implementation.  Thanks to Mark
+Muldoon for pointing it out.
+
+-- Added new functions (implemented as macros, but they look like
+functions, and they could have just as easily been implemented as
+functions) which take opt_TYPE argument out of the argument list
+and attach it to the function name, ie
+     optreg(&var,OPT_INT,'v',"Variance");
+is equivalent to
+     optreg_INT(&var,'v',"Variance);
+Actually, I did this in version 3.0 but I forgot to mention it in
+the documentation.
+
+=== 3.0 === 
+-- Totally rewrote the API.  This is a completely new version.  I also
+rewrote opt.texi, so you can look there for descriptions of what is
+now available, and how it (should) work.  Note that the new API is not
+yet etched in stone.  I look forward to user feedback and expect a few
+tweaks.  Highlights:
+
+-- The macro `optregister' is now officially deprecated. The
+opt-ically (opt-imally?) correct way to register a variable now is
+with the functions (not macro!)
+      optreg(&var,OPT_INT,'v',"Variance parameter");
+or
+      optrega(&var,OPT_INT,'v',"variance","Variance parameter");
+Notice that you are still discouraged from providing only long names
+to registered variables, but it is not too hard to do it.  See the
+docs, or if that fails, the opt.h file.
+
+-- A number of other, mostly obscure, functions [such as opt_ufilter()
+and opt_dfilter()] have been out-and-out deleted. If you do anything
+fancy, you'll probably have to rewrite your code.  But if you use the
+old (deprecated) standard optregister/getopts, they will still work.
+For now.
+
+-- The opt_TYPE enumeration variables have been changed by adding an
+OPT_ prefix to all of them (now, OPT_INT, OPT_VSTRING, etc.); however,
+a set of #define's in the opt.h file permits you to still use INT, VSTRING,
+etc.  This means that the namespace collision problem (with other packages
+that define INT, for instance) is not really solved.  But you need only
+remove the appropriate lines from the opt.h file if it's a problem in
+your application.  And someday, those lines in the opt.h will officially
+go away.
+
+-- Hook functions are now a little more coherent.  The doc's distinguish
+between two kinds: those associated with individual variables, and those
+associated with more general actions, like exiting.  The first kind take
+a void * argument, the second kind take no argument.  Both return an
+an integer.  opt.h defines available return values: OPT_OK, OPT_ERROR,
+OPT_EXIT, OPT_QUIT, OPT_ABORT.  The return values tell opt what to do
+after running the hook.
+
+-- I've tried to impose a convention on routine names.  optlowercase()
+functions usually take a void * first argument, and do things that relate
+to a specific option.  optUpperCase() functions are more general.
+Mostly, opt_withunderscore() functions are private functions used internally
+by opt.  
+
+-- The two examples in opt.texi (and by derivation, opt.info, opt.ps,
+and opt.html) are now provided in the test directory, so you can
+verify that the code does as advertised.  This should help distinguish
+between bugs in the code and bugs in the advertisement.  
+
+-- A shell script `checkopt' has also been added to the test
+directory. It runs the two examples in the test directory with various
+arguments and grep's for the appropriate response.  It's a kind of
+crude regression tester.
+
+-- Added a function optinvoked(&var) which returns the number of times
+the option was invoked on the command line.  You'll probably only care
+whether or not the number is nonzero, but the idea is that you may
+want to distinguish between using x=0 because that is the default and
+using x=0 because the user explicitly asked for that value.  (You can
+use this, for instance, to enforce required options [how's that for an
+oxymoron?])
+
+-- I fixed tkopt, though it may be broken again.  I don't know that it
+is itself all that useful, but it is meant to illustrate how useful it
+is to have all your programs using the same options parsing package.
+Since the interface is the same, you can write a general wrapper (such
+as tkopt) which can be used for all your programs.
+
+=== 2.7 ===
+--  Added new macro called `optregisterlong' which permits you to
+register an option with a long name (even though it has no short
+single-character counterpart).
+      optregisterlong(var,INT,"variable","This is a variable");
+
+--  Changed first argument of the FUNCTIONS (not macros) opt_register()
+and opt_register_gen() from 'char *' to 'void *'; this means that
+you don't need to use all that infernal casting to (char *) for the
+different types!  In fact, the functions are now arguably more
+attractive than the macros, eg
+       opt_register_gen(&var,INT,'v',"variable","This is a variable");
+
+--  Modified the configure.in/Makefile.am 's considerably so that
+you can configure using --with-readline and now you'll just get
+a single libopt.a (instead of before, when there was a libopt.a and
+a liboptrl.a), and furthermore it takes the *.o files out of the
+standard libreadline.a and libtermcap.a (after going to some effort
+to try to find them) and puts them directly into libopt.a; that way,
+you won't have to link your work-a-day programs that use opt to
+`-lreadline -ltermcap' as you did before.  In other words, once you
+make libopt.a, it is completely invisible to the programmer whether or
+not it is a readline-enhanced version of libopt.a; only when the user
+uses the program will it be clear whether those readline features are
+there or not.
+
+--  put an extra 'strdup' function in opt_util, just in case the platform
+doesn't provide one.
+
+=== 2.6 ===
+This is the first version that I finally got around to making a
+NEWS file.  Since there are so many changes in this version, it
+is probably buggier than previous versions.  Hopefully, agressive
+bug reporting will fix that problem!
+
+--  Main new thing is that I finally got the opt(&argc,&argv) function 
+working. It can, and *should* be used in place of the now depricated
+getopts(argc,argv) function.  Since it takes pointers to argc,argv
+as arguments, it is able to return the "leftover" 
+
+-- updated the documentation (some)
+
+--  Changed the way the usage message is invoked.  Instead of '--'
+it is now invoked '--help'.
+
+--  Also changed the format of the usage message, and in the process
+broke tkopt (!)
+
+--  Now '--' denotes the end of opt processing.  Opt processing
+also ends with any unexpected non-delimited option.  So you can
+use either
+       program -a 5 -b2 file1 file2 ...
+or
+       program -a 5 -b2 -- file1 file2 ...
+If you have not registered any nondelimited options, then these
+command lines will give the same effect.
+
+-- Commented out the use of '/' as an alternate delimiter, to be
+consistent with a style that used to be common in MS-DOS.  This was a
+bad idea when Bill Gates invented it, and it's a bad idea now.
+
+-- Also updated the automake/autoconfig somewhat, but the readline
+part is far from automatic, so I've set those routines (src/liboptrl.a
+and test/testrl) as "extra", which means you have to go into those
+directories and compile them explicitly.
+
+
+Thanks to Gora Mohanty and Mark Galassi for suggestions that led
+to this burst of activity.
+
+
+
+=== ===
+James Theiler, jt@lanl.gov
+
+$Id: NEWS,v 3.12 1998/07/26 22:32:32 jt Exp $
+
