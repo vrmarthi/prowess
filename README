@@ -1,7 +1,7 @@
 
-	     \/---------------------------------------------\/
-	     ||	Calibration System for the Programmable ORT ||
-	     /\---------------------------------------------/\
+	     \/----------------------------------------------\/
+	     ||	Programmable Ooty Wide-Field Emulator System ||
+	     /\----------------------------------------------/\
 
 This is a suite of programs to generate, display and analyse complex 
 visibilities obtained from the Phase-I 40-element interferometer and 
@@ -12,8 +12,8 @@ and the unknown true visibilties.
 To build:
 ---------
 
-1. After untar-ing the package, you must see a directory "CaSPORT". 
-   Change to directory "CaSPORT". 
+1. After untar-ing the package, you must see a directory "Prowess". 
+   Change to directory "Prowess". 
 
 2. The build directory contains the directories "opt", "cfitsio", "src", 
    "inc", "lib", "doc" and "bin". Besides, it has a "README"(this file), 
@@ -58,3 +58,14 @@ To build:
 
    From : GSLLIB  = -lgsl -lptcblas -latlas
      To : GSLLIB  = -lgsl -lgslcblas
+     
+     
+     Citation
+     ---------
+     
+     If you use this software, please be sure to cite the following paper:
+     
+     "Prowess - a software model for the Ooty Wide Field Array", Marthi, V. R., 2017, 
+     Journal of Astrophysics and Astronomy, 38, 12M.
+     
+     
